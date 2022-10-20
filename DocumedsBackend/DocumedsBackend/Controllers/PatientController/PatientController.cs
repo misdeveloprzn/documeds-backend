@@ -26,19 +26,11 @@ namespace DocumedsBackend.Controllers.PatientController
 		/// <returns>Список пациентов</returns>
 		//[Authorize]
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<IActionResult> Get()
 		{
 			var patients = _db.Patients.Include(x => x.PatientAddresses).Include(x => x.PatientDocuments)
 				.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
-
-			//var test1 = _mapper.Map<PatientDto>(patients.FirstOrDefault());
-
-			//var qs = patients.ToQueryString();
-
-			var patientsToSend = patients.Select(p =>  _mapper.Map<PatientDto>(p));
-
-			//.LogInformation("тест");
-
+			var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
 			return Ok(Json(patientsToSend));
 		}
 	}
