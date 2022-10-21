@@ -8,7 +8,6 @@
 		public string? Patronymic { get; set; }
 		public DateTime? BirthDate { get; set; }
 		public int Gender { get; set; }
-		public string GenderStr => Gender == 0 ? "Женский" : (Gender == 1 ? "Мужской" : "Не определен");
 		public string? Snils { get; set; }
 		public string? Phone { get; set; }
 		public string? Email { get; set; }
