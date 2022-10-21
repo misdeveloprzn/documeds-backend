@@ -20,12 +20,12 @@
 		public string? PassportIssuer { get; set; }
 		public string? PassportIssuerCode { get; set; }
 		public DateTime? PassportDateFrom { get; set; }
-		public List<PatientTagDto>? PatientTags { get; set; }
+		public List<PatientTagDto> PatientTags { get; set; }
 	}
 
 	public class PatientTagDto
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 		public int IdTag { get; set; }
 		public string Name { get; set; }
 	}

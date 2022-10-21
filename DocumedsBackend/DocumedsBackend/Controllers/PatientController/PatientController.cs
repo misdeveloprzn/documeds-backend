@@ -29,7 +29,6 @@ namespace DocumedsBackend.Controllers.PatientController
 		{
 			var patients = _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
 			var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
-			//var patientsToSend = Json(patients);
 			return Ok(Json(patientsToSend));
 		}
 		/// <summary>
@@ -40,10 +39,40 @@ namespace DocumedsBackend.Controllers.PatientController
 		[HttpPost]
 		public async Task<IActionResult> Post(PatientDto dto)
 		{
-			var patients = _db.Patients//.Include(x => x.PatientAddresses).Include(x => x.PatientDocuments)
-				.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
-			var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
-			return Ok(Json(patientsToSend));
+			var patient = _mapper.Map<Patient>(dto);
+			patient.IdOrg = 1;
+			_db.Patients.Add(patient);
+			await _db.SaveChangesAsync();
+			var patientToSend = _mapper.Map<PatientDto>(await _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation)
+				.SingleOrDefaultAsync(x => x.Id == patient.Id));
+			return Ok(Json(patientToSend));
+		}
+		/// <summary>
+		/// Редактирует существующую запись пациента.
+		/// </summary>
+		/// <returns>Информацию по созданному пациенту</returns>
+		//[Authorize]
+		[HttpPut]
+		public async Task<IActionResult> Put(PatientDto dto)
+		{
+			var patient = await _db.Patients.FindAsync(dto.Id);
+			_mapper.Map(dto, patient);
+			await _db.SaveChangesAsync();
+			return Ok();
+		}
+		/// <summary>
+		/// Удаляет существующую запись пациента.
+		/// </summary>
+		/// <returns>Информацию по созданному пациенту</returns>
+		//[Authorize]
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			var patient = await _db.Patients.FindAsync(id);
+			if(patient != null)
+				_db.Patients.Remove(patient);
+			await _db.SaveChangesAsync();
+			return Ok();
 		}
 	}
 }
