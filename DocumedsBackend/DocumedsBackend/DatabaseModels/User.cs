@@ -1,10 +1,9 @@
-﻿using DocumedsBackend;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-	public partial class User
+    public partial class User
     {
         public int Id { get; set; }
         public string Login { get; set; } = null!;

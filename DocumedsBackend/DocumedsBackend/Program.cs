@@ -52,17 +52,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         };
                     });
 
-//builder.Services.AddW3CLogging(logging =>
-//{
-//    // Log all W3C fields
-//    logging.LoggingFields = W3CLoggingFields.All;
+builder.Services.AddW3CLogging(logging =>
+{
+	// Log all W3C fields
+	logging.LoggingFields = W3CLoggingFields.All;
 
-//    logging.FileSizeLimit = 5 * 1024 * 1024;
-//    logging.RetainedFileCountLimit = 2;
-//    logging.FileName = "LogFile";
-//    logging.LogDirectory = AppContext.BaseDirectory + "\\Logs";
-//    logging.FlushInterval = TimeSpan.FromSeconds(2);
-//});
+	logging.FileSizeLimit = 5 * 1024 * 1024;
+	logging.RetainedFileCountLimit = 2;
+	logging.FileName = "LogFile";
+	logging.LogDirectory = @AppContext.BaseDirectory + "\\Logs";
+	logging.FlushInterval = TimeSpan.FromSeconds(2);
+});
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
@@ -92,7 +92,7 @@ app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.UseW3CLogging();
+app.UseW3CLogging();
 
 app.MapControllerRoute(
     name: "default",

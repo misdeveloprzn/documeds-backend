@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using DocumedsBackend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DocumedsBackend
 {
-	public partial class documeds_dbContext : DbContext
+    public partial class documeds_dbContext : DbContext
     {
         public documeds_dbContext()
         {
@@ -19,8 +18,6 @@ namespace DocumedsBackend
 
         public virtual DbSet<ClientOrganization> ClientOrganizations { get; set; } = null!;
         public virtual DbSet<Patient> Patients { get; set; } = null!;
-        public virtual DbSet<PatientAddress> PatientAddresses { get; set; } = null!;
-        public virtual DbSet<PatientDocument> PatientDocuments { get; set; } = null!;
         public virtual DbSet<PatientTag> PatientTags { get; set; } = null!;
         public virtual DbSet<TagType> TagTypes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -89,6 +86,26 @@ namespace DocumedsBackend
                     .HasMaxLength(200)
                     .HasColumnName("note");
 
+                entity.Property(e => e.PassportDateFrom)
+                    .HasColumnType("timestamp without time zone")
+                    .HasColumnName("passport_date_from");
+
+                entity.Property(e => e.PassportIssuer)
+                    .HasMaxLength(100)
+                    .HasColumnName("passport_issuer");
+
+                entity.Property(e => e.PassportIssuerCode)
+                    .HasMaxLength(10)
+                    .HasColumnName("passport_issuer_code");
+
+                entity.Property(e => e.PassportNumber)
+                    .HasMaxLength(15)
+                    .HasColumnName("passport_number");
+
+                entity.Property(e => e.PassportSeries)
+                    .HasMaxLength(10)
+                    .HasColumnName("passport_series");
+
                 entity.Property(e => e.Patronymic)
                     .HasMaxLength(50)
                     .HasColumnName("patronymic");
@@ -96,6 +113,14 @@ namespace DocumedsBackend
                 entity.Property(e => e.Phone)
                     .HasMaxLength(12)
                     .HasColumnName("phone");
+
+                entity.Property(e => e.RegisterAddress)
+                    .HasMaxLength(300)
+                    .HasColumnName("register_address");
+
+                entity.Property(e => e.ResidenceAddress)
+                    .HasMaxLength(300)
+                    .HasColumnName("residence_address");
 
                 entity.Property(e => e.Snils)
                     .HasMaxLength(14)
@@ -106,78 +131,6 @@ namespace DocumedsBackend
                     .HasForeignKey(d => d.IdOrg)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("patient_fk");
-            });
-
-            modelBuilder.Entity<PatientAddress>(entity =>
-            {
-                entity.ToTable("patient_address");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Address)
-                    .HasMaxLength(300)
-                    .HasColumnName("address");
-
-                entity.Property(e => e.DateFrom)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_from")
-                    .HasDefaultValueSql("CURRENT_DATE");
-
-                entity.Property(e => e.DateTo)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_to");
-
-                entity.Property(e => e.IdAddressType).HasColumnName("id_address_type");
-
-                entity.Property(e => e.IdPatient).HasColumnName("id_patient");
-
-                entity.HasOne(d => d.IdPatientNavigation)
-                    .WithMany(p => p.PatientAddresses)
-                    .HasForeignKey(d => d.IdPatient)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("patient_address_fk");
-            });
-
-            modelBuilder.Entity<PatientDocument>(entity =>
-            {
-                entity.ToTable("patient_document");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.DateFrom)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_from")
-                    .HasDefaultValueSql("CURRENT_DATE");
-
-                entity.Property(e => e.DateTo)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_to");
-
-                entity.Property(e => e.IdDocumentType).HasColumnName("id_document_type");
-
-                entity.Property(e => e.IdPatient).HasColumnName("id_patient");
-
-                entity.Property(e => e.Issuer)
-                    .HasMaxLength(100)
-                    .HasColumnName("issuer");
-
-                entity.Property(e => e.IssuerCode)
-                    .HasMaxLength(10)
-                    .HasColumnName("issuer_code");
-
-                entity.Property(e => e.Number)
-                    .HasMaxLength(30)
-                    .HasColumnName("number");
-
-                entity.Property(e => e.Series)
-                    .HasMaxLength(30)
-                    .HasColumnName("series");
-
-                entity.HasOne(d => d.IdPatientNavigation)
-                    .WithMany(p => p.PatientDocuments)
-                    .HasForeignKey(d => d.IdPatient)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("patient_document_fk");
             });
 
             modelBuilder.Entity<PatientTag>(entity =>

@@ -13,11 +13,8 @@
 		public string? Phone { get; set; }
 		public string? Email { get; set; }
 		public string? Note { get; set; }
-		public int? IdAddressResidence { get; set; }
-		public string? AddressResidence { get; set; }
-		public int? IdAddressRegister { get; set; }
-		public string? AddressRegister { get; set; }
-		public int? IdPassport { get; set; }
+		public string? ResidenceAddress { get; set; }
+		public string? RegisterAddress { get; set; }
 		public string? PassportSeries { get; set; }
 		public string? PassportNumber { get; set; }
 		public string? PassportIssuer { get; set; }
@@ -28,7 +25,8 @@
 
 	public class PatientTagDto
 	{
-		public int? IdPatientTag { get; set; }
-		public string? Name { get; set; }
+		public int Id { get; set; }
+		public int IdTag { get; set; }
+		public string Name { get; set; }
 	}
 }
