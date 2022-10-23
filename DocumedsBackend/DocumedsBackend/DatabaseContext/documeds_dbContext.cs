@@ -54,17 +54,11 @@ namespace DocumedsBackend
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.BirthDate)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("birth_date");
+                entity.Property(e => e.BirthDate).HasColumnName("birth_date");
 
-                entity.Property(e => e.DateEnd)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_end");
+                entity.Property(e => e.DateEnd).HasColumnName("date_end");
 
-                entity.Property(e => e.DateStart)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_start");
+                entity.Property(e => e.DateStart).HasColumnName("date_start");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(100)
@@ -86,9 +80,7 @@ namespace DocumedsBackend
                     .HasMaxLength(200)
                     .HasColumnName("note");
 
-                entity.Property(e => e.PassportDateFrom)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("passport_date_from");
+                entity.Property(e => e.PassportDateFrom).HasColumnName("passport_date_from");
 
                 entity.Property(e => e.PassportIssuer)
                     .HasMaxLength(100)
@@ -146,13 +138,11 @@ namespace DocumedsBackend
                 entity.HasOne(d => d.IdPatientNavigation)
                     .WithMany(p => p.PatientTags)
                     .HasForeignKey(d => d.IdPatient)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("patient_tag_fk1");
 
                 entity.HasOne(d => d.IdTagNavigation)
                     .WithMany(p => p.PatientTags)
                     .HasForeignKey(d => d.IdTag)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("patient_tag_fk2");
             });
 

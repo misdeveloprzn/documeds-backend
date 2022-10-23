@@ -36,13 +36,21 @@ namespace DocumedsBackend.Controllers.PatientController
 		[HttpPost]
 		public async Task<IActionResult> Post(PatientDto dto)
 		{
-			var patient = _mapper.Map<Patient>(dto);
-			patient.IdOrg = 1;
-			_db.Patients.Add(patient);
-			await _db.SaveChangesAsync();
-			var patientToSend = _mapper.Map<PatientDto>(await _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation)
+			try
+			{
+				var patient = _mapper.Map<Patient>(dto);
+				patient.IdOrg = 1;
+				_db.Patients.Add(patient);
+				await _db.SaveChangesAsync();
+				var patientToSend = _mapper.Map<PatientDto>(await _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation)
 				.SingleOrDefaultAsync(x => x.Id == patient.Id));
-			return Ok(Json(patientToSend));
+				return Ok(Json(patientToSend));
+			}
+			catch(Exception e)
+			{
+				ModelState.AddModelError(nameof(e.Message), "Что-то пошло не так!");
+				return BadRequest(ModelState);
+			}
 		}
 		/// <summary>
 		/// Редактирует существующую запись пациента.
