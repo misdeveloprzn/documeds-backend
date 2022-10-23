@@ -15,6 +15,7 @@ namespace DocumedsBackend.Mapping
 			CreateMap<PatientDto, Patient>()
 				.ForMember(dest => dest.PatientTags, opt => opt.MapFrom(src => src.PatientTags
 					.Select(x => new PatientTag { Id = x.Id ?? 0, IdTag = x.IdTag })));
+			CreateMap<TagType, TagTypeDto>();
 		}
 	}
 }
