@@ -10,11 +10,11 @@ namespace DocumedsBackend.Mapping
 		{
 			CreateMap<Patient, PatientDto>()
 				.ForMember(dest => dest.PatientTags, opt => opt.MapFrom(src => src.PatientTags
-					.Select(x => new PatientTagDto { Id = x.Id, Name = x.IdTagNavigation.Name })));
+
+					.Select(x => new PatientTagDto { Id = x.Id, IdTag = x.IdTag, Name = x.IdTagNavigation.Name })));
 			CreateMap<PatientDto, Patient>()
 				.ForMember(dest => dest.PatientTags, opt => opt.MapFrom(src => src.PatientTags
-					.Select(x => new PatientTag { Id = x.Id ?? 0, IdTag = x.Id ?? 0})));
-			CreateMap<TagType, TagTypeDto>();
+					.Select(x => new PatientTag { Id = x.Id ?? 0, IdTag = x.IdTag })));
 		}
 	}
 }

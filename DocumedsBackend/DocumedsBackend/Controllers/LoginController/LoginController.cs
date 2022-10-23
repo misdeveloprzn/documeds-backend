@@ -7,10 +7,9 @@ using System.Linq;
 using DocumedsBackend;
 using DocumedsBackend.Controllers.LoginController;
 using DocumedsBackend.Authentication;
-
 namespace MedProject.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Route("[controller]")]
     public class LoginController : Controller
     {
@@ -22,7 +21,7 @@ namespace MedProject.Controllers
         /// <summary>
         /// Возвращает токен авторизации и информацию о текущем пользователе, если пройдена авторизация.
         /// </summary>
-        /// <returns>Информация о тенкущем пользователе</returns>
+        /// <returns>Информация о текущем пользователе</returns>
         [HttpPost]
         public async Task<IActionResult> Token(InDto dto)
         {

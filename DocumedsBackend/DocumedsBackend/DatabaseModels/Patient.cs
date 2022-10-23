@@ -7,8 +7,6 @@ namespace DocumedsBackend
     {
         public Patient()
         {
-            PatientAddresses = new HashSet<PatientAddress>();
-            PatientDocuments = new HashSet<PatientDocument>();
             PatientTags = new HashSet<PatientTag>();
         }
 
@@ -25,10 +23,15 @@ namespace DocumedsBackend
         public DateTime DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
         public int IdOrg { get; set; }
+        public string? ResidenceAddress { get; set; }
+        public string? RegisterAddress { get; set; }
+        public string? PassportSeries { get; set; }
+        public string? PassportNumber { get; set; }
+        public string? PassportIssuer { get; set; }
+        public string? PassportIssuerCode { get; set; }
+        public DateTime? PassportDateFrom { get; set; }
 
         public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
-        public virtual ICollection<PatientAddress> PatientAddresses { get; set; }
-        public virtual ICollection<PatientDocument> PatientDocuments { get; set; }
         public virtual ICollection<PatientTag> PatientTags { get; set; }
     }
 }
