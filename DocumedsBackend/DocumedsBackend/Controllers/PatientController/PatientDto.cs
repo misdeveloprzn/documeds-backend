@@ -28,7 +28,7 @@
 
 	public class PatientTagDto
 	{
-		public int? IdPatientTag { get; set; }
+		public int? Id { get; set; }
 		public string? Name { get; set; }
 	}
 }
