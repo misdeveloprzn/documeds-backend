@@ -40,6 +40,9 @@ namespace DocumedsBackend.Controllers.PatientController
 			{
 				var patient = _mapper.Map<Patient>(dto);
 				patient.IdOrg = 1;
+				var datetest = patient.BirthDate;
+				var datetest1 = (patient.BirthDate ?? DateTime.Today).ToUniversalTime();
+				var datetest2 = (patient.BirthDate ?? DateTime.Today).ToLocalTime();
 				_db.Patients.Add(patient);
 				await _db.SaveChangesAsync();
 				var patientToSend = _mapper.Map<PatientDto>(await _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation)
@@ -61,7 +64,6 @@ namespace DocumedsBackend.Controllers.PatientController
 		public async Task<IActionResult> Put(PatientDto dto)
 		{
 			var patient = await _db.Patients.FindAsync(dto.Id);
-			patient.PatientTags = new List<PatientTag>();
 			_mapper.Map(dto, patient);
 			await _db.SaveChangesAsync();
 			return Ok();

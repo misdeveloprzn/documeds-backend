@@ -17,6 +17,7 @@ namespace DocumedsBackend
         }
 
         public virtual DbSet<ClientOrganization> ClientOrganizations { get; set; } = null!;
+        public virtual DbSet<ContractorOrganization> ContractorOrganizations { get; set; } = null!;
         public virtual DbSet<Patient> Patients { get; set; } = null!;
         public virtual DbSet<PatientTag> PatientTags { get; set; } = null!;
         public virtual DbSet<TagType> TagTypes { get; set; } = null!;
@@ -46,6 +47,75 @@ namespace DocumedsBackend
                 entity.Property(e => e.ShortName)
                     .HasMaxLength(200)
                     .HasColumnName("short_name");
+            });
+
+            modelBuilder.Entity<ContractorOrganization>(entity =>
+            {
+                entity.ToTable("contractor_organization");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BankAddress)
+                    .HasMaxLength(300)
+                    .HasColumnName("bank_address");
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(150)
+                    .HasColumnName("bank_name");
+
+                entity.Property(e => e.Bik)
+                    .HasMaxLength(50)
+                    .HasColumnName("bik");
+
+                entity.Property(e => e.DateEnd).HasColumnName("date_end");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.FactAddress)
+                    .HasMaxLength(300)
+                    .HasColumnName("fact_address");
+
+                entity.Property(e => e.FullName)
+                    .HasMaxLength(300)
+                    .HasColumnName("full_name");
+
+                entity.Property(e => e.Inn)
+                    .HasMaxLength(30)
+                    .HasColumnName("inn");
+
+                entity.Property(e => e.JurAddress)
+                    .HasMaxLength(300)
+                    .HasColumnName("jur_address");
+
+                entity.Property(e => e.KorrAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("korr_account");
+
+                entity.Property(e => e.Kpp)
+                    .HasMaxLength(30)
+                    .HasColumnName("kpp");
+
+                entity.Property(e => e.Ogrn)
+                    .HasMaxLength(30)
+                    .HasColumnName("ogrn");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(12)
+                    .HasColumnName("phone");
+
+                entity.Property(e => e.RsAccount)
+                    .HasMaxLength(50)
+                    .HasColumnName("rs_account");
+
+                entity.Property(e => e.ShortName)
+                    .HasMaxLength(150)
+                    .HasColumnName("short_name");
+
+                entity.Property(e => e.Website)
+                    .HasMaxLength(100)
+                    .HasColumnName("website");
             });
 
             modelBuilder.Entity<Patient>(entity =>
