@@ -24,8 +24,8 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Documeds",
         Description = "Тестовая медицинская информационная система"
     });
-   // var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-   // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -65,12 +65,6 @@ builder.Services.AddW3CLogging(logging =>
 });
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
-
-//builder.Host.ConfigureLogging(loggingBuilder =>
-//{
-//    loggingBuilder.ClearProviders();
-//    loggingBuilder.AddLog4Net("log4net.config");
-//});
 
 var app = builder.Build();
 

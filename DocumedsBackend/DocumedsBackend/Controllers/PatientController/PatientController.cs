@@ -61,6 +61,7 @@ namespace DocumedsBackend.Controllers.PatientController
 		public async Task<IActionResult> Put(PatientDto dto)
 		{
 			var patient = await _db.Patients.FindAsync(dto.Id);
+			patient.PatientTags = new List<PatientTag>();
 			_mapper.Map(dto, patient);
 			await _db.SaveChangesAsync();
 			return Ok();

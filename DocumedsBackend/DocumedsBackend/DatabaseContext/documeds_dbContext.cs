@@ -152,9 +152,9 @@ namespace DocumedsBackend
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.Value)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("value");
             });
 
             modelBuilder.Entity<User>(entity =>
