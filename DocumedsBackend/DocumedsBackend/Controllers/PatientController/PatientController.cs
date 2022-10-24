@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DocumedsBackend.Controllers.PatientController
 {
@@ -20,19 +22,29 @@ namespace DocumedsBackend.Controllers.PatientController
 		/// Возвращает список пациентов.
 		/// </summary>
 		/// <returns>Список пациентов</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			var patients = _db.Patients.Where(x => x.IdOrg == 1 && x.DateEnd == null).Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
-			var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
-			return Ok(Json(patientsToSend));
+			var orgIdStr = User?.FindFirst(ClaimTypes.Actor).Value;
+			int orgId;
+			if (int.TryParse(orgIdStr, out orgId))
+			{
+				var patients = _db.Patients.Where(x => x.IdOrg == orgId && x.DateEnd == null).Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
+				var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
+				return Ok(Json(patientsToSend));
+			}
+			else
+			{
+				ModelState.AddModelError(nameof(orgId), "Данная организация не существует!");
+				return BadRequest(ModelState);
+			}
 		}
 		/// <summary>
 		/// Создает новую запись пациента.
 		/// </summary>
 		/// <returns>Информацию по созданному пациенту</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> Post(PatientDto dto)
 		{
@@ -56,7 +68,7 @@ namespace DocumedsBackend.Controllers.PatientController
 		/// Редактирует существующую запись пациента.
 		/// </summary>
 		/// <returns>Информацию по созданному пациенту</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpPut]
 		public async Task<IActionResult> Put(PatientDto dto)
 		{
@@ -69,7 +81,7 @@ namespace DocumedsBackend.Controllers.PatientController
 		/// Удаляет существующую запись пациента.
 		/// </summary>
 		/// <returns>Информацию по созданному пациенту</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{

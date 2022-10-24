@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DocumedsBackend.Controllers.ContractorOrganizationController
 {
@@ -20,19 +22,29 @@ namespace DocumedsBackend.Controllers.ContractorOrganizationController
 		/// Возвращает список организаций-контрагентов.
 		/// </summary>
 		/// <returns>Список организаций-контрагентов</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			var orgs = _db.ContractorOrganizations.Where(x => x.IdOrg == 1 && x.DateEnd == null);
-			var orgsToSend = await orgs.Select(p => _mapper.Map<ContractorOrganizationDto>(p)).ToListAsync();
-			return Ok(Json(orgsToSend));
+			var orgIdStr = User?.FindFirst(ClaimTypes.Actor).Value;
+			int orgId;
+			if (int.TryParse(orgIdStr, out orgId))
+			{
+				var orgs = _db.ContractorOrganizations.Where(x => x.IdOrg == 1 && x.DateEnd == null);
+				var orgsToSend = await orgs.Select(p => _mapper.Map<ContractorOrganizationDto>(p)).ToListAsync();
+				return Ok(Json(orgsToSend));
+			}
+			else
+			{
+				ModelState.AddModelError(nameof(orgId), "Данная организация не существует!");
+				return BadRequest(ModelState);
+			}
 		}
 		/// <summary>
 		/// Создает новую запись организации-контрагента.
 		/// </summary>
 		/// <returns>Информацию по созданной организации-контрагента</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> Post(ContractorOrganizationDto dto)
 		{
@@ -55,7 +67,7 @@ namespace DocumedsBackend.Controllers.ContractorOrganizationController
 		/// <summary>
 		/// Редактирует существующую запись организации-контрагента.
 		/// </summary>
-		//[Authorize]
+		[Authorize]
 		[HttpPut]
 		public async Task<IActionResult> Put(ContractorOrganizationDto dto)
 		{
@@ -67,7 +79,7 @@ namespace DocumedsBackend.Controllers.ContractorOrganizationController
 		/// <summary>
 		/// Удаляет существующую запись организации-контрагента.
 		/// </summary>
-		//[Authorize]
+		[Authorize]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{

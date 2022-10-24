@@ -50,7 +50,8 @@ namespace MedProject.Controllers
             {
                 Id = user?.Id ?? 0,
                 Fullname = user.Login,
-               // Post = currentPerson?.PersonPositions?.FirstOrDefault()?.IdPositionNavigation.Name,
+               // IdOrg = user.Login,
+                // Post = currentPerson?.PersonPositions?.FirstOrDefault()?.IdPositionNavigation.Name,
                 //Roles = identity.Claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Select(c => c.Value).ToList(),
                 Token = encodedJwt,
                 Tokenexpires = now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
@@ -68,7 +69,7 @@ namespace MedProject.Controllers
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
                 };
 
-
+            claims.Add(new Claim(ClaimTypes.Actor, user.IdOrg.ToString()));
            // claims.AddRange(user.UserRoles.Select(r => new Claim(ClaimsIdentity.DefaultRoleClaimType, r.IdUserRoleTypeNavigation.Code)));
             return new ClaimsIdentity(claims, "Token"); ;
         }

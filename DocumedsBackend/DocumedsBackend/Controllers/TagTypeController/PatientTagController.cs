@@ -21,7 +21,7 @@ namespace DocumedsBackend.Controllers.PatientTagController
 		/// Возвращает список возмодных тэгов пациентов.
 		/// </summary>
 		/// <returns>Список возможных тэгов пациентов</returns>
-		//[Authorize]
+		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
