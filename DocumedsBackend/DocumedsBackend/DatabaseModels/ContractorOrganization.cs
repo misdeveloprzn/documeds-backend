@@ -22,5 +22,8 @@ namespace DocumedsBackend
         public string? BankAddress { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
+        public int IdOrg { get; set; }
+
+        public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
     }
 }

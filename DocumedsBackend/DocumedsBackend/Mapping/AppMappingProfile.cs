@@ -17,6 +17,7 @@ namespace DocumedsBackend.Mapping
 					.Select(x => new PatientTag { Id = x.Id ?? 0, IdTag = x.IdTag })));
 			CreateMap<TagType, TagTypeDto>();
 			CreateMap<ContractorOrganization, ContractorOrganizationDto>();
+			CreateMap<ContractorOrganizationDto, ContractorOrganization>();
 		}
 	}
 }

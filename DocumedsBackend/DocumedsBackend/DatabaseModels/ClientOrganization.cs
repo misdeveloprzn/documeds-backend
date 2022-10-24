@@ -7,6 +7,7 @@ namespace DocumedsBackend
     {
         public ClientOrganization()
         {
+            ContractorOrganizations = new HashSet<ContractorOrganization>();
             Patients = new HashSet<Patient>();
             Users = new HashSet<User>();
         }
@@ -15,6 +16,7 @@ namespace DocumedsBackend
         public string? FullName { get; set; }
         public string? ShortName { get; set; }
 
+        public virtual ICollection<ContractorOrganization> ContractorOrganizations { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

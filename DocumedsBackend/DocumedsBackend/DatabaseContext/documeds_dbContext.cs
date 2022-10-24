@@ -81,6 +81,8 @@ namespace DocumedsBackend
                     .HasMaxLength(300)
                     .HasColumnName("full_name");
 
+                entity.Property(e => e.IdOrg).HasColumnName("id_org");
+
                 entity.Property(e => e.Inn)
                     .HasMaxLength(30)
                     .HasColumnName("inn");
@@ -116,6 +118,12 @@ namespace DocumedsBackend
                 entity.Property(e => e.Website)
                     .HasMaxLength(100)
                     .HasColumnName("website");
+
+                entity.HasOne(d => d.IdOrgNavigation)
+                    .WithMany(p => p.ContractorOrganizations)
+                    .HasForeignKey(d => d.IdOrg)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("contractor_organization_fk");
             });
 
             modelBuilder.Entity<Patient>(entity =>

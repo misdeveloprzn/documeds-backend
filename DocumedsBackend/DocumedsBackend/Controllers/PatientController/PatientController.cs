@@ -24,7 +24,7 @@ namespace DocumedsBackend.Controllers.PatientController
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			var patients = _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
+			var patients = _db.Patients.Where(x => x.IdOrg == 1 && x.DateEnd == null).Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation);
 			var patientsToSend = await patients.Select(p => _mapper.Map<PatientDto>(p)).ToListAsync();
 			return Ok(Json(patientsToSend));
 		}
@@ -40,9 +40,6 @@ namespace DocumedsBackend.Controllers.PatientController
 			{
 				var patient = _mapper.Map<Patient>(dto);
 				patient.IdOrg = 1;
-				var datetest = patient.BirthDate;
-				var datetest1 = (patient.BirthDate ?? DateTime.Today).ToUniversalTime();
-				var datetest2 = (patient.BirthDate ?? DateTime.Today).ToLocalTime();
 				_db.Patients.Add(patient);
 				await _db.SaveChangesAsync();
 				var patientToSend = _mapper.Map<PatientDto>(await _db.Patients.Include(x => x.PatientTags).ThenInclude(x => x.IdTagNavigation)
@@ -76,11 +73,19 @@ namespace DocumedsBackend.Controllers.PatientController
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var patient = await _db.Patients.FindAsync(id);
-			if(patient != null)
-				_db.Patients.Remove(patient);
-			await _db.SaveChangesAsync();
-			return Ok();
+			try
+			{
+				var patient = await _db.Patients.FindAsync(id);
+				if (patient != null)
+					patient.DateEnd = DateTime.Today.ToUniversalTime();
+				await _db.SaveChangesAsync();
+				return Ok();
+			}
+			catch (Exception e)
+			{
+				ModelState.AddModelError(nameof(e.Message), "Что-то пошло не так!");
+				return BadRequest(ModelState);
+			}
 		}
 	}
 }
