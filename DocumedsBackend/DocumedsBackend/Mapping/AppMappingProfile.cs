@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DocumedsBackend.Controllers.ContractorOrganizationController;
 using DocumedsBackend.Controllers.PatientController;
+using DocumedsBackend.Controllers.ScheduleController;
 using DocumedsBackend.Controllers.TagTypeController;
 
 namespace DocumedsBackend.Mapping
@@ -18,6 +19,28 @@ namespace DocumedsBackend.Mapping
 			CreateMap<TagType, TagTypeDto>();
 			CreateMap<ContractorOrganization, ContractorOrganizationDto>();
 			CreateMap<ContractorOrganizationDto, ContractorOrganization>();
+			CreateMap<Schedule, ScheduleDto>()
+				.ForMember(dest => dest.Appointments, opt => opt.MapFrom(src => src.Appointments
+					.Select(x => new AppointmentDto
+					{
+						Id = x.Id,
+						IdPatient = x.IdPatient,
+						IdAppointmentType = x.IdAppointmentType,
+						DateTimeFrom = x.DateTimeFrom,
+						DateTimeTo = x.DateTimeTo,
+						IdAppointmentStatus = x.IdAppointmentStatus,
+						IdMedicalCase = x.IdMedicalCase,
+						Status = new AppointmentStatusTypeDto
+						{
+							Id = x.IdAppointmentStatusNavigation.Id,
+							Value = x.IdAppointmentStatusNavigation.Value
+						},
+						Type = new AppointmentTypeDto
+						{
+							Id = x.IdAppointmentTypeNavigation.Id,
+							Value = x.IdAppointmentTypeNavigation.Value
+						}
+					})));
 		}
 	}
 }
