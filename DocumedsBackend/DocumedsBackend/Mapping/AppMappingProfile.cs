@@ -20,7 +20,12 @@ namespace DocumedsBackend.Mapping
 			CreateMap<ContractorOrganization, ContractorOrganizationDto>();
 			CreateMap<ContractorOrganizationDto, ContractorOrganization>();
 			CreateMap<Schedule, ScheduleDto>()
-				.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDoctorNavigation))
+				.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => new DoctorDto
+				{
+					LastName = src.IdDoctorPositionNavigation.IdDoctorNavigation.LastName,
+					FirstName = src.IdDoctorPositionNavigation.IdDoctorNavigation.FirstName,
+					Patronymic = src.IdDoctorPositionNavigation.IdDoctorNavigation.Patronymic
+				}))
 				.ForMember(dest => dest.Appointments, opt => opt.MapFrom(src => src.Appointments
 					.Select(x => new AppointmentDto
 					{
