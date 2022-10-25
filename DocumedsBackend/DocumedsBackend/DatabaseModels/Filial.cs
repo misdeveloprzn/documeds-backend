@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-    public partial class TagType
+    public partial class Filial
     {
-        public TagType()
+        public Filial()
         {
-            PatientTags = new HashSet<PatientTag>();
+            Cabinets = new HashSet<Cabinet>();
         }
 
         public int Id { get; set; }
-        public string Value { get; set; } = null!;
+        public string? Name { get; set; }
         public int IdOrg { get; set; }
+        public string? Address { get; set; }
 
         public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
-        public virtual ICollection<PatientTag> PatientTags { get; set; }
+        public virtual ICollection<Cabinet> Cabinets { get; set; }
     }
 }
