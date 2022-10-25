@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-    public partial class AppointmentType
+	public partial class AppointmentType
     {
         public AppointmentType()
         {

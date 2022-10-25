@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DocumedsBackend
 {
-    public partial class documeds_dbContext : DbContext
+	public partial class documeds_dbContext : DbContext
     {
         public documeds_dbContext()
         {
@@ -436,7 +436,33 @@ namespace DocumedsBackend
 
                 entity.Property(e => e.IdPosition).HasColumnName("id_position");
 
-                entity.Property(e => e.IsMainFunction).HasColumnName("is_main_function");
+                entity.Property(e => e.IsMainFunction)
+                    .HasColumnName("is_main_function")
+                    .HasDefaultValueSql("1");
+
+                entity.HasOne(d => d.IdCategoryNavigation)
+                    .WithMany(p => p.DoctorPositions)
+                    .HasForeignKey(d => d.IdCategory)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("doctor_position_fk2");
+
+                entity.HasOne(d => d.IdDepartmentNavigation)
+                    .WithMany(p => p.DoctorPositions)
+                    .HasForeignKey(d => d.IdDepartment)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("doctor_position_fk3");
+
+                entity.HasOne(d => d.IdDoctorNavigation)
+                    .WithMany(p => p.DoctorPositions)
+                    .HasForeignKey(d => d.IdDoctor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("doctor_position_fk");
+
+                entity.HasOne(d => d.IdPositionNavigation)
+                    .WithMany(p => p.DoctorPositions)
+                    .HasForeignKey(d => d.IdPosition)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("doctor_position_fk1");
             });
 
             modelBuilder.Entity<Filial>(entity =>
@@ -676,6 +702,24 @@ namespace DocumedsBackend
                 entity.Property(e => e.IdDoctorPosition).HasColumnName("id_doctor_position");
 
                 entity.Property(e => e.IdOrg).HasColumnName("id_org");
+
+                entity.HasOne(d => d.IdCabinetNavigation)
+                    .WithMany(p => p.Schedules)
+                    .HasForeignKey(d => d.IdCabinet)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("schedule_fk2");
+
+                entity.HasOne(d => d.IdDoctorPositionNavigation)
+                    .WithMany(p => p.Schedules)
+                    .HasForeignKey(d => d.IdDoctorPosition)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("schedule_fk1");
+
+                entity.HasOne(d => d.IdOrgNavigation)
+                    .WithMany(p => p.Schedules)
+                    .HasForeignKey(d => d.IdOrg)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("schedule_fk");
             });
 
             modelBuilder.Entity<TagType>(entity =>

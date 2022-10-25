@@ -15,6 +15,7 @@ namespace DocumedsBackend
             Patients = new HashSet<Patient>();
             PositionCategories = new HashSet<PositionCategory>();
             PositionTypes = new HashSet<PositionType>();
+            Schedules = new HashSet<Schedule>();
             TagTypes = new HashSet<TagType>();
             Users = new HashSet<User>();
         }
@@ -42,6 +43,7 @@ namespace DocumedsBackend
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<PositionCategory> PositionCategories { get; set; }
         public virtual ICollection<PositionType> PositionTypes { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
         public virtual ICollection<TagType> TagTypes { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-    public partial class PositionCategory
+	public partial class PositionCategory
     {
+        public PositionCategory()
+        {
+            DoctorPositions = new HashSet<DoctorPosition>();
+        }
+
         public int Id { get; set; }
         public string? Value { get; set; }
         public int IdOrg { get; set; }
 
         public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
+        public virtual ICollection<DoctorPosition> DoctorPositions { get; set; }
     }
 }

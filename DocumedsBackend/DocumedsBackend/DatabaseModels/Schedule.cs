@@ -17,6 +17,9 @@ namespace DocumedsBackend
         public DateTime DateTimeFrom { get; set; }
         public DateTime DateTimeTo { get; set; }
 
+        public virtual Cabinet IdCabinetNavigation { get; set; } = null!;
+        public virtual DoctorPosition IdDoctorPositionNavigation { get; set; } = null!;
+        public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
         public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

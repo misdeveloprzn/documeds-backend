@@ -3,11 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using DocumedsBackend;
-using DocumedsBackend.Controllers.LoginController;
 using DocumedsBackend.Authentication;
-namespace MedProject.Controllers
+using DocumedsBackend.Controllers;
+
+namespace DocumedsBackend
 {
 	[ApiController]
     [Route("[controller]")]

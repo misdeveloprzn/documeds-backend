@@ -7,6 +7,7 @@
 		public int IdCabinet { get; set; }
 		public DateTime DateTimeFrom { get; set; }
 		public DateTime DateTimeTo { get; set; }
+		public DoctorDto Doctor { get; set; }
 		public List<AppointmentDto> Appointments { get; set; }
 	}
 	public class AppointmentDto
@@ -31,4 +32,11 @@
 		public int Id { get; set; }
 		public string? Value { get; set; }
 	}
+	public class DoctorDto
+	{
+		public string? LastName { get; set; }
+		public string? FirstName { get; set; }
+		public string? Patronymic { get; set; }
+	}
+	
 }

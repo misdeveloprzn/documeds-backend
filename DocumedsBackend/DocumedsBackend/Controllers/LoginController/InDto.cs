@@ -1,4 +1,4 @@
-﻿namespace DocumedsBackend.Controllers.LoginController
+﻿namespace DocumedsBackend.Controllers
 {
 	public class InDto
 	{

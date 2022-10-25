@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-    public partial class Doctor
+	public partial class Doctor
     {
+        public Doctor()
+        {
+            DoctorPositions = new HashSet<DoctorPosition>();
+        }
+
         public int Id { get; set; }
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
@@ -25,5 +30,6 @@ namespace DocumedsBackend
         public DateTime? PassportDateFrom { get; set; }
 
         public virtual ClientOrganization IdOrgNavigation { get; set; } = null!;
+        public virtual ICollection<DoctorPosition> DoctorPositions { get; set; }
     }
 }
