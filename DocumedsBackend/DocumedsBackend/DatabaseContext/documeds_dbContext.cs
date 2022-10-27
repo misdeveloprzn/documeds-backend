@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DocumedsBackend
 {
-	public partial class documeds_dbContext : DbContext
+    public partial class documeds_dbContext : DbContext
     {
         public documeds_dbContext()
         {
@@ -341,6 +341,12 @@ namespace DocumedsBackend
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .HasColumnName("name");
+
+                entity.HasOne(d => d.IdFilialNavigation)
+                    .WithMany(p => p.Departments)
+                    .HasForeignKey(d => d.IdFilial)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("department_fk");
             });
 
             modelBuilder.Entity<Doctor>(entity =>

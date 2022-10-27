@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DocumedsBackend.Controllers.ContractorOrganizationController;
+using DocumedsBackend.Controllers.FilialController;
 using DocumedsBackend.Controllers.PatientController;
 using DocumedsBackend.Controllers.ScheduleController;
 using DocumedsBackend.Controllers.TagTypeController;
@@ -57,6 +58,11 @@ namespace DocumedsBackend.Mapping
 							BirthDate = x.IdPatientNavigation.BirthDate
 						}
 					})));
+			CreateMap<Filial, FilialDto>()
+				.ForMember(dest => dest.Cabinets, opt => opt.MapFrom(src => src.Cabinets
+					.Select(x => new CabinetDto { Id = x.Id, Name = x.Name, Description = x.Description })))
+			    .ForMember(dest => dest.Departments, opt => opt.MapFrom(src => src.Departments
+					.Select(x => new DepartmentDto { Id = x.Id, Name = x.Name, Description = x.Description })));
 		}
 	}
 }

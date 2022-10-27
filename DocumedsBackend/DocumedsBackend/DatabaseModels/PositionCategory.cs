@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DocumedsBackend
 {
-	public partial class PositionCategory
+    public partial class PositionCategory
     {
         public PositionCategory()
         {
