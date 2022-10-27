@@ -198,6 +198,10 @@ namespace DocumedsBackend
                     .HasMaxLength(200)
                     .HasColumnName("short_name");
 
+                entity.Property(e => e.TimeClose).HasColumnName("time_close");
+
+                entity.Property(e => e.TimeOpen).HasColumnName("time_open");
+
                 entity.Property(e => e.Website)
                     .HasMaxLength(100)
                     .HasColumnName("website");

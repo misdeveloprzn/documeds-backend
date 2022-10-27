@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumedsBackend.Controllers.ClientOrganizationController;
 using DocumedsBackend.Controllers.ContractorOrganizationController;
 using DocumedsBackend.Controllers.DoctorController;
 using DocumedsBackend.Controllers.FilialController;
@@ -84,6 +85,7 @@ namespace DocumedsBackend.Mapping
 							Description = x.IdPositionNavigation.Description
 						},
 					})));
+			CreateMap<ClientOrganization, ClientOrganizationDto>();
 		}
 	}
 }

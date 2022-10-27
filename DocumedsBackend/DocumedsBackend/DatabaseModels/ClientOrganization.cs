@@ -34,6 +34,8 @@ namespace DocumedsBackend
         public string? Bik { get; set; }
         public string? BankName { get; set; }
         public string? BankAddress { get; set; }
+        public DateTime? TimeOpen { get; set; }
+        public DateTime? TimeClose { get; set; }
 
         public virtual ICollection<ClientOrganizationEmail> ClientOrganizationEmails { get; set; }
         public virtual ICollection<ClientOrganizationPhone> ClientOrganizationPhones { get; set; }
