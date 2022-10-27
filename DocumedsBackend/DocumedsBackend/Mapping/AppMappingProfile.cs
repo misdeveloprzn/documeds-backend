@@ -45,6 +45,16 @@ namespace DocumedsBackend.Mapping
 						{
 							Id = x.IdAppointmentTypeNavigation.Id,
 							Value = x.IdAppointmentTypeNavigation.Value
+						},
+						Patient = new AppointmentPatientDto
+						{
+							Id = x.IdPatientNavigation.Id,
+							LastName = x.IdPatientNavigation.LastName,
+							FirstName = x.IdPatientNavigation.FirstName,
+							Patronymic = x.IdPatientNavigation.Patronymic,
+							Phone = x.IdPatientNavigation.Phone,
+							ResidenceAddress = x.IdPatientNavigation.ResidenceAddress,
+							BirthDate = x.IdPatientNavigation.BirthDate
 						}
 					})));
 		}

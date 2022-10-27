@@ -33,6 +33,7 @@ namespace DocumedsBackend.Controllers.ScheduleController
 				var schedule = _db.Schedules.Where(x => x.IdOrg == orgId)
 					.Include(x => x.Appointments).ThenInclude(x => x.IdAppointmentStatusNavigation)
 					.Include(x => x.Appointments).ThenInclude(x => x.IdAppointmentTypeNavigation)
+					.Include(x => x.Appointments).ThenInclude(x => x.IdPatientNavigation)
 					.Include(x => x.IdDoctorPositionNavigation).ThenInclude(x => x.IdDoctorNavigation);
 
 

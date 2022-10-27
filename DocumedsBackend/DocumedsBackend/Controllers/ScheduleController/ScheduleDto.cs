@@ -21,6 +21,7 @@
 		public int? IdMedicalCase { get; set; }
 		public AppointmentStatusTypeDto Status { get; set; }
 		public AppointmentTypeDto Type { get; set; }
+		public AppointmentPatientDto Patient { get; set; }
 	}
 	public class AppointmentStatusTypeDto
 	{
@@ -38,5 +39,14 @@
 		public string? FirstName { get; set; }
 		public string? Patronymic { get; set; }
 	}
-	
+	public class AppointmentPatientDto
+	{
+		public int Id { get; set; }
+		public string LastName { get; set; }
+		public string FirstName { get; set; }
+		public string? Patronymic { get; set; }
+		public string? Phone { get; set; }
+		public string? ResidenceAddress { get; set; }
+		public DateTime? BirthDate { get; set; }
+	}
 }
