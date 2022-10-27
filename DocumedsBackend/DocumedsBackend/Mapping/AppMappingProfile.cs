@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DocumedsBackend.Controllers.ContractorOrganizationController;
+using DocumedsBackend.Controllers.DoctorController;
 using DocumedsBackend.Controllers.FilialController;
 using DocumedsBackend.Controllers.PatientController;
 using DocumedsBackend.Controllers.ScheduleController;
@@ -21,7 +22,7 @@ namespace DocumedsBackend.Mapping
 			CreateMap<ContractorOrganization, ContractorOrganizationDto>();
 			CreateMap<ContractorOrganizationDto, ContractorOrganization>();
 			CreateMap<Schedule, ScheduleDto>()
-				.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => new DoctorDto
+				.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => new DoctorInfoDto
 				{
 					LastName = src.IdDoctorPositionNavigation.IdDoctorNavigation.LastName,
 					FirstName = src.IdDoctorPositionNavigation.IdDoctorNavigation.FirstName,
@@ -60,9 +61,28 @@ namespace DocumedsBackend.Mapping
 					})));
 			CreateMap<Filial, FilialDto>()
 				.ForMember(dest => dest.Cabinets, opt => opt.MapFrom(src => src.Cabinets
-					.Select(x => new CabinetDto { Id = x.Id, Name = x.Name, Description = x.Description })))
-			    .ForMember(dest => dest.Departments, opt => opt.MapFrom(src => src.Departments
-					.Select(x => new DepartmentDto { Id = x.Id, Name = x.Name, Description = x.Description })));
+					.Select(x => new CabinetDto { Id = x.Id, IdFilial = x.IdFilial, Name = x.Name, Description = x.Description })))
+				.ForMember(dest => dest.Departments, opt => opt.MapFrom(src => src.Departments
+					.Select(x => new DepartmentDto { Id = x.Id, IdFilial = x.IdFilial, Name = x.Name, Description = x.Description })));
+			CreateMap<Doctor, DoctorDto>()
+				.ForMember(dest => dest.Positions, opt => opt.MapFrom(src => src.DoctorPositions
+					.Select(x => new DoctorPositionDto
+					{
+						Id = x.Id,
+						IdPosition = x.IdPosition,
+						DateStart = x.DateStart,
+						DateEnd = x.DateEnd,
+						IdDepartment = x.IdDepartment,
+						IdFilial = x.IdDepartmentNavigation.IdFilial,
+						IdCategory = x.IdCategory,
+						IsMainFunction = x.IsMainFunction,
+						PositionType = new PositionTypeDto
+						{
+							Id = x.IdPositionNavigation.Id,
+							Value = x.IdPositionNavigation.Value,
+							Description = x.IdPositionNavigation.Description
+						},
+					})));
 		}
 	}
 }
