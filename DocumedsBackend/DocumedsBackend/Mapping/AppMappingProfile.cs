@@ -22,12 +22,13 @@ namespace DocumedsBackend.Mapping
 			CreateMap<ContractorOrganization, ContractorOrganizationDto>();
 			CreateMap<ContractorOrganizationDto, ContractorOrganization>();
 			CreateMap<Schedule, ScheduleDto>()
-				.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => new DoctorInfoDto
-				{
-					LastName = src.IdDoctorPositionNavigation.IdDoctorNavigation.LastName,
-					FirstName = src.IdDoctorPositionNavigation.IdDoctorNavigation.FirstName,
-					Patronymic = src.IdDoctorPositionNavigation.IdDoctorNavigation.Patronymic
-				}))
+				.ForMember(dest => dest.IdFilial, opt => opt.MapFrom(src => src.IdCabinetNavigation.IdFilial))
+				.ForMember(dest => dest.IdDepartment, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDepartment))
+				.ForMember(dest => dest.IdDoctor, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDoctor))
+				.ForMember(dest => dest.DoctorLastName, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDoctorNavigation.LastName))
+				.ForMember(dest => dest.DoctorFirstName, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDoctorNavigation.FirstName))
+				.ForMember(dest => dest.DoctorPatronymic, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdDoctorNavigation.Patronymic))
+				.ForMember(dest => dest.DoctorPosition, opt => opt.MapFrom(src => src.IdDoctorPositionNavigation.IdPositionNavigation.Value))				
 				.ForMember(dest => dest.Appointments, opt => opt.MapFrom(src => src.Appointments
 					.Select(x => new AppointmentDto
 					{

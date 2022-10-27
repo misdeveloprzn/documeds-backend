@@ -7,7 +7,13 @@
 		public int IdCabinet { get; set; }
 		public DateTime DateTimeFrom { get; set; }
 		public DateTime DateTimeTo { get; set; }
-		public DoctorInfoDto Doctor { get; set; }
+		public int IdFilial { get; set; }
+		public int IdDepartment { get; set; }
+		public int IdDoctor { get; set; }
+		public string? DoctorLastName { get; set; }
+		public string? DoctorFirstName { get; set; }
+		public string? DoctorPatronymic { get; set; }
+		public string? DoctorPosition { get; set; }
 		public List<AppointmentDto> Appointments { get; set; }
 	}
 	public class AppointmentDto
@@ -32,12 +38,6 @@
 	{
 		public int Id { get; set; }
 		public string? Value { get; set; }
-	}
-	public class DoctorInfoDto
-	{
-		public string? LastName { get; set; }
-		public string? FirstName { get; set; }
-		public string? Patronymic { get; set; }
 	}
 	public class AppointmentPatientDto
 	{

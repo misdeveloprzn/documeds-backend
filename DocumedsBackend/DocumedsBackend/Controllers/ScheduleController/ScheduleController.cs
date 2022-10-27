@@ -34,9 +34,9 @@ namespace DocumedsBackend.Controllers.ScheduleController
 					.Include(x => x.Appointments).ThenInclude(x => x.IdAppointmentStatusNavigation)
 					.Include(x => x.Appointments).ThenInclude(x => x.IdAppointmentTypeNavigation)
 					.Include(x => x.Appointments).ThenInclude(x => x.IdPatientNavigation)
-					.Include(x => x.IdDoctorPositionNavigation).ThenInclude(x => x.IdDoctorNavigation);
-
-
+					.Include(x => x.IdDoctorPositionNavigation).ThenInclude(x => x.IdDoctorNavigation)
+					.Include(x => x.IdDoctorPositionNavigation).ThenInclude(x => x.IdPositionNavigation)
+					.Include(x => x.IdCabinetNavigation);
 				var scheduleToSend = await schedule.Select(p => _mapper.Map<ScheduleDto>(p)).ToListAsync();
 				return Ok(Json(scheduleToSend));
 			}
