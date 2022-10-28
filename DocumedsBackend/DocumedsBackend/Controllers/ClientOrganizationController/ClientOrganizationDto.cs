@@ -16,7 +16,9 @@
         public string? Bik { get; set; }
         public string? BankName { get; set; }
         public string? BankAddress { get; set; }
-        public DateTime? TimeOpen { get; set; }
-        public DateTime? TimeClose { get; set; }
+        public int? HourOpen { get; set; }
+        public int? MinuteOpen { get; set; }
+        public int? HourClose { get; set; }
+        public int? MinuteClose { get; set; }
     }
 }

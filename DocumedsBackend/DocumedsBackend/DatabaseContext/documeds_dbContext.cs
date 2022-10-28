@@ -170,6 +170,10 @@ namespace DocumedsBackend
                     .HasMaxLength(100)
                     .HasColumnName("full_name");
 
+                entity.Property(e => e.HourClose).HasColumnName("hour_close");
+
+                entity.Property(e => e.HourOpen).HasColumnName("hour_open");
+
                 entity.Property(e => e.Inn)
                     .HasMaxLength(30)
                     .HasColumnName("inn");
@@ -186,6 +190,10 @@ namespace DocumedsBackend
                     .HasMaxLength(30)
                     .HasColumnName("kpp");
 
+                entity.Property(e => e.MinuteClose).HasColumnName("minute_close");
+
+                entity.Property(e => e.MinuteOpen).HasColumnName("minute_open");
+
                 entity.Property(e => e.Ogrn)
                     .HasMaxLength(30)
                     .HasColumnName("ogrn");
@@ -197,10 +205,6 @@ namespace DocumedsBackend
                 entity.Property(e => e.ShortName)
                     .HasMaxLength(200)
                     .HasColumnName("short_name");
-
-                entity.Property(e => e.TimeClose).HasColumnName("time_close");
-
-                entity.Property(e => e.TimeOpen).HasColumnName("time_open");
 
                 entity.Property(e => e.Website)
                     .HasMaxLength(100)
